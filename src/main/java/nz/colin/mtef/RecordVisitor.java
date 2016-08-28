@@ -29,4 +29,5 @@ public interface RecordVisitor {
     void visit(SUBSYM aSubSym);
     void visit(SYM aSym);
     void visit(TMPL aTmpl);
+    void visit(FUTURE aFuture);
 }

@@ -20,7 +20,7 @@ public class TMPLParser extends Parser<TMPL>{
         if((variation & 0x80) > 0){
             variation = (variation & 0x7F) | (readByte(in) << 8);
         }
-        System.out.println("templateCode is "+ templateCode);
+
         TMPL.Template template = TMPL.get(templateCode);
         int templateOptions = 0;
         if(template.hasOptions()){

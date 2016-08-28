@@ -58,6 +58,7 @@ public class ParserRegistry {
         _parsers.put(FONT_DEF, new FONT_DEFParser());
         _parsers.put(EQN_PREFS, new EQN_PREFSParser());
         _parsers.put(ENCODING_DEF, new ENCODING_DEFParser());
+        _parsers.put(FUTURE, new FUTUREParser());
         parsers = ImmutableMap.copyOf(_parsers);
     }
 

@@ -244,6 +244,10 @@ public class XMLSerialize implements RecordVisitor{
         current.peek().appendChild(el);
     }
 
+    public void visit(FUTURE aFuture) {
+
+    }
+
     public void append(Element el, String[] attributes, Record obj){
         Method[] methods = obj.getClass().getMethods();
         Map<String, Method> methodsMap = Maps.newHashMap();
