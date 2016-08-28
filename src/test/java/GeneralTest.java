@@ -1,4 +1,3 @@
-import com.sun.tools.doclets.internal.toolkit.util.DocFinder;
 import nu.xom.Document;
 import nz.colin.mathml.Converter;
 import nz.colin.mtef.XMLSerialize;
@@ -31,7 +30,7 @@ public class GeneralTest {
         Converter c = new Converter();
         Document mathml = c.doConvert(serializer.getRoot());
 
-        System.out.println(mathml.toXML());
+        System.out.println(mathml.toXML().replace("&amp;", "&"));
 
         is.close();
     }
