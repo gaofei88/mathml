@@ -29,7 +29,9 @@ public class XMLSerialize implements RecordVisitor{
         Element el = new Element("char");
         String[] attributes = { "options", "font_position", "typeface", "variation", "mt_code_value"};
         append(el, attributes, aChar);
-
+        if(el.getChildElements().size() == 0){
+            System.out.println(el.toXML().toString());
+        }
         current.peek().appendChild(el);
     }
 

@@ -57,7 +57,7 @@ public class CharReplacer {
         if(replacedStr.contains("(Char)")){
             replacedStr = replacedStr.replace("(Char)", "" + (char) Integer.parseInt(mtCode,16));
         }else{
-            replacedStr = replacedStr.replace("(CharHex)", "&#x" + mtCode);
+            replacedStr = replacedStr.replace("(CharHex)", "&#x" + mtCode + ";");
         }
 
         Element m = new Element(replacedStr.substring(1,3));

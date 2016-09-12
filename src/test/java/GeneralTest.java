@@ -60,25 +60,28 @@ public class GeneralTest {
 
     @Test
     public void testEquation2() throws IOException, ParseException {
-        InputStream is = GeneralTest.class.getResourceAsStream("/ole/fences.bin");
-        POIFSFileSystem poifs = new POIFSFileSystem(is);
-        PushbackInputStream pis = new PushbackInputStream(poifs.createDocumentInputStream("Equation Native"));
+       // for(int i = 18; i < 20; i++) {
+            InputStream is = GeneralTest.class.getResourceAsStream("/ole/equation2.bin");
+            //InputStream is = GeneralTest.class.getResourceAsStream("/ole/cly/mttest"+i+".bin");
+            POIFSFileSystem poifs = new POIFSFileSystem(is);
+            PushbackInputStream pis = new PushbackInputStream(poifs.createDocumentInputStream("Equation Native"));
 
-        pis.read(new byte[28]);
+            pis.read(new byte[28]);
 
-        MTEF mtef = new MTEFParser().parse(pis);
-        XMLSerialize serializer = new XMLSerialize();
+            MTEF mtef = new MTEFParser().parse(pis);
+            XMLSerialize serializer = new XMLSerialize();
 
-        mtef.accept(serializer);
+            mtef.accept(serializer);
 
-        System.out.println("MTEF is \n" + serializer.getRoot().toXML());
+           // System.out.println("MTEF is \n" + serializer.getRoot().toXML());
+            System.out.println(serializer.getRoot().toXML().toString());
+            Converter c = new Converter();
+            Document mathml = c.doConvert(serializer.getRoot());
 
-        Converter c = new Converter();
-        Document mathml = c.doConvert(serializer.getRoot());
+            System.out.println("MathML is \n" + mathml.toXML().replace("&amp;", "&"));
 
-        System.out.println("MathML is \n" + mathml.toXML().replace("&amp;", "&"));
-
-        is.close();
+            is.close();
+       // }
     }
 
 }

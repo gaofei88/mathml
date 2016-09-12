@@ -6,6 +6,7 @@ import nz.colin.mtef.records.COLOR_DEF;
 import nz.colin.mtef.records.Record;
 
 import java.io.PushbackInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +17,9 @@ public class COLOR_DEFParser extends Parser<COLOR_DEF>{
     protected COLOR_DEF doParse(PushbackInputStream in) throws ParseException {
         int options = readByte(in);
         int s = (options & Record.Options.COLOR_CMYK) > 0 ? 4 : 3;
-        List<Integer> colorValues = Lists.newArrayListWithCapacity(s);
+        List<Integer> colorValues = new ArrayList(4);
         for(int i = 0; i < s; i++){
-            colorValues.set(i, readSimple16BitInteger(in));
+            colorValues.add(readSimple16BitInteger(in));
         }
 
         String name = (options & Record.Options.COLOR_NAME) > 0 ? readNullTerminatedString(in) : "";

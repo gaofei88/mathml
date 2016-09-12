@@ -87,12 +87,12 @@ public class Mover {
 
     private void movePrecedingSubSup(Element el) {
         Nodes els = el.query(String.format("//tmpl[(%s) and %s]", SUBSUP_SELECTOR, PRE));
-        System.out.println(els.size());
+       // System.out.println(els.size());
     }
 
     private void moveFollowingSubSup(Element el){
         Nodes els = el.query(String.format("//tmpl[(%s) and not(%s)]", SUBSUP_SELECTOR, PRE));
-        System.out.println(els.size());
+       // System.out.println(els.size());
         for(int i = 0; i < els.size(); i++){
             Element n = (Element) els.get(i);
             Nodes siblings = newPrecedingSiblings(n);
@@ -111,7 +111,7 @@ public class Mover {
                 }
 
                 if(hasCloseParen){
-                    System.out.println(siblings.size());
+                    //System.out.println(siblings.size());
                     for(int j = siblings.size()-1; j >= 0; j--){
                         Node next = getNext(siblings.get(j));
                         boolean hasOpenParen = false;
@@ -127,7 +127,7 @@ public class Mover {
                         }
                     }
                     moveParent(siblings, e);
-                    System.out.println(siblings.size());
+                    //System.out.println(siblings.size());
                     //TO-DO: refer mover.rb 73-75
                 }else{
                     e.appendChild(siblingLast.copy());
@@ -136,7 +136,7 @@ public class Mover {
             }
             Elements children = n.getChildElements();
             for(int j = 0; j < children.size(); j++){
-                System.out.println(children.get(j).getLocalName());
+               // System.out.println(children.get(j).getLocalName());
                 if(children.get(j).getLocalName().equals("slot")){
                     n.insertChild(e, j);
                     break;
