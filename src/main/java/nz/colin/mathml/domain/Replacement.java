@@ -45,10 +45,10 @@ public class Replacement {
     };
 
     private static final TextMap[] textMaps = new TextMap[]{
-            new TextMap("<mo>(Char)</mo>"), new TextMap("<mo stretchy='false'>(Char)</mo>"), new TextMap("<mo stretchy='false'>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
             new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
-            new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo stretchy='false'>(Char)</mo>"),
-            new TextMap("<mo stretchy='false'>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
+            new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
+            new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
+            new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
             new TextMap(UNSUPPORTED, UNSUPPORTED), new TextMap(UNSUPPORTED, UNSUPPORTED), new TextMap("<mn>(Char)</mn>", "(Char)", "(Char)"),
             new TextMap("<mo>(Char)</mo>", "(Char)"), new TextMap("<mi>(Char)</mi>", "(Char)"), new TextMap("<mi>(Char)</mi>", "(Char)"),
             new TextMap(UNSUPPORTED, UNSUPPORTED), new TextMap("<mo>(CharHex)</mo>"), new TextMap("<mo>(CharHex)</mo>"),
