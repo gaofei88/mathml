@@ -24,6 +24,10 @@ public class PILE extends Record{
         this.records = records;
     }
 
+    public List<Record> getRecords() {
+        return records;
+    }
+
     @Override
     public void accept(RecordVisitor visitor) {
         visitor.visit(this);

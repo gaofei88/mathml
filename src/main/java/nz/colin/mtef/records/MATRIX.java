@@ -58,6 +58,46 @@ public class MATRIX extends Record{
         this.objectList = objectList;
     }
 
+    public int getOptions() {
+        return options;
+    }
+
+    public Nudge getNudge() {
+        return nudge;
+    }
+
+    public String getvAlign() {
+        return vAlign;
+    }
+
+    public String gethJust() {
+        return hJust;
+    }
+
+    public String getvJust() {
+        return vJust;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public List<Integer> getRowParts() {
+        return rowParts;
+    }
+
+    public List<Integer> getColParts() {
+        return colParts;
+    }
+
+    public List<List<Record>> getObjectList() {
+        return objectList;
+    }
+
     @Override
     public void accept(RecordVisitor visitor) {
         visitor.visit(this);

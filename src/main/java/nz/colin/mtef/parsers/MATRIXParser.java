@@ -34,13 +34,16 @@ public class MATRIXParser extends Parser<MATRIX> {
         }
         List<Record> records = Lists.newArrayList();
         // There should only be LINE records in this list - is it worth enforcing this somewhere?
+        readRecordsToEnd(in, records); // 这是一个hack, 之间应该有一行是不用的数据, 还是说可能有好几行?待验证
+        records.clear();
         readRecordsToEnd(in, records);
+
         if (records.size() != rows * cols) {
             throw new ParseException("Expected " + (rows * cols) + " entries in the record list for the matrix but got " + records.size());
         }
         List<List<Record>> rowList = Lists.newArrayListWithCapacity(rows);
         for (int i=0; i<rows; i++) {
-            rowList.set(i, records.subList(i * cols, (i+1) * cols - 1));
+            rowList.add(records.subList(i * cols, (i+1) * cols));
         }
         return new MATRIX(options, nudge,vAlign,hJust,vJust,rows, cols, rowPartition, columnPartition, rowList);
     }

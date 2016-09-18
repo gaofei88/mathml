@@ -6,6 +6,7 @@ import nz.colin.mtef.records.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -151,7 +152,34 @@ public class XMLSerialize implements RecordVisitor{
 
     public void visit(MATRIX aMatrix) {
         Element el = new Element("matrix");
-        el.appendChild("have not implement yet.");
+
+        String[] attributes = { "rows", "cols" };
+        append(el, attributes, aMatrix);
+
+
+        Element valign = new Element("valign");
+        valign.appendChild(aMatrix.getvAlign());
+        el.appendChild(valign);
+
+        Element vJust = new Element("v_just");
+        vJust.appendChild(aMatrix.getvJust());
+        el.appendChild(vJust);
+
+        Element hJust = new Element("h_just");
+        hJust.appendChild(aMatrix.gethJust());
+        el.appendChild(hJust);
+
+        current.push(el);
+
+        List<List<Record>> objectList = aMatrix.getObjectList();
+        for(int i = 0; i < objectList.size(); i++){
+            List<Record> t  = objectList.get(i);
+            for(int j = 0; j < t.size(); j++){
+                t.get(j).accept(this);
+            }
+        }
+
+        current.pop();
         current.peek().appendChild(el);
     }
 
@@ -181,7 +209,11 @@ public class XMLSerialize implements RecordVisitor{
 
     public void visit(PILE aPile) {
         Element el = new Element("pile");
-        el.appendChild("have not implemented yet");
+        current.push(el);
+        for(Record record: aPile.getRecords()){
+            record.accept(this);
+        }
+        current.pop();
         current.peek().appendChild(el);
     }
 
