@@ -222,6 +222,7 @@ public class XMLSerialize implements RecordVisitor{
     public void visit(SIZE aSize) {
         Element el = new Element("size");
         String[] attributes = { "lsize", "dsize" };
+
         append(el, attributes, aSize);
         current.peek().appendChild(el);
     }

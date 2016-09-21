@@ -22,11 +22,11 @@ public class SIZE extends Record{
         this.dSize = dSize;
     }
 
-    public int getlSize() {
+    public int getLsize() {
         return lSize;
     }
 
-    public int getdSize() {
+    public int getDsize() {
         return dSize;
     }
 

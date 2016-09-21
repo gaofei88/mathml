@@ -87,6 +87,54 @@ public class Mover {
 
     private void movePrecedingSubSup(Element el) {
         Nodes els = el.query(String.format("//tmpl[(%s) and %s]", SUBSUP_SELECTOR, PRE));
+
+        for(int i = 0; i < els.size(); i++){
+            Element n = (Element) els.get(i);
+            Nodes siblings = newFollowingSiblings(n);
+            Element e = new Element("slot");
+
+            if(siblings.size() > 0){
+                Node siblingFirst = siblings.get(0);
+
+                boolean hasOpenParen = false;
+                Nodes mtCodes = siblingFirst.query("//mt_code_value");
+                for(int j = 0; j < mtCodes.size(); j++){
+                    if(OPEN_PAREN.contains(mtCodes.get(j).getValue())){
+                        hasOpenParen = true;
+                        break;
+                    }
+                }
+
+                if(hasOpenParen){
+//                    for(int j = siblings.size() - 1; j >= 0; j--){
+//                        Node next = getNext(siblings.get(j));
+//                        boolean hasCloseParen = false;
+//                        Nodes tMtCodes = next.query("//mt_code_value");
+//                        for(int k = 0; k < tMtCodes.size(); k++){
+//                            if(CLOSE_PAREN.contains(tMtCodes.get(k).getValue())){
+//                                hasCloseParen = true;
+//                                break;
+//                            }
+//                        }
+//                        if(hasCloseParen){
+//                            siblings.get(j).detach();
+//                        }
+//                    }
+                    moveParent(siblings, e);
+                }else{
+                    e.appendChild(siblingFirst.copy());
+                    siblingFirst.detach();
+                }
+            }
+            Elements children = n.getChildElements();
+            for(int j = 0; j < children.size(); j++){
+                // System.out.println(children.get(j).getLocalName());
+                if(children.get(j).getLocalName().equals("slot")){
+                    n.insertChild(e, j);
+                    break;
+                }
+            }
+        }
        // System.out.println(els.size());
     }
 
@@ -111,21 +159,22 @@ public class Mover {
                 }
 
                 if(hasCloseParen){
-                    //System.out.println(siblings.size());
-                    for(int j = siblings.size()-1; j >= 0; j--){
-                        Node next = getNext(siblings.get(j));
-                        boolean hasOpenParen = false;
-                        Nodes tMtCodes = next.query("//mt_code_value");
-                        for(int k = 0; k < tMtCodes.size(); k++){
-                            if(OPEN_PAREN.contains(tMtCodes.get(k).getValue())){
-                                hasOpenParen = true;
-                                break;
-                            }
-                        }
-                        if(hasOpenParen){
-                           siblings.get(j).detach();
-                        }
-                    }
+//                    can't understand what ! in ruby file does.
+//                    System.out.println(siblings.size());
+//                    for(int j = siblings.size()-1; j >= 0; j--){
+//                        Node next = getNext(siblings.get(j));
+//                        boolean hasOpenParen = false;
+//                        Nodes tMtCodes = next.query("//mt_code_value");
+//                        for(int k = 0; k < tMtCodes.size(); k++){
+//                            if(OPEN_PAREN.contains(tMtCodes.get(k).getValue())){
+//                                hasOpenParen = true;
+//                                break;
+//                            }
+//                        }
+//                        if(hasOpenParen){
+//                           siblings.get(j).detach();
+//                        }
+//                    }
                     moveParent(siblings, e);
                     //System.out.println(siblings.size());
                     //TO-DO: refer mover.rb 73-75
@@ -194,6 +243,10 @@ public class Mover {
         }
         last_preceding_siblings = allSiblings;
         return siblings;
+    }
+
+    private Nodes newFollowingSiblings(Element el){
+        return el.query("following-sibling::tmpl | following-sibling::char");
     }
 
     public Node getNext(Node current) {
