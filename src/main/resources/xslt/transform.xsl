@@ -20,9 +20,16 @@
     </xsl:template>
 
     <xsl:template match="slot">
-        <mrow>
-            <xsl:apply-templates/>
-        </mrow>
+        <xsl:choose>
+            <xsl:when test="count(matrix) &gt; 0">
+                <xsl:apply-templates/>
+            </xsl:when>
+            <xsl:otherwise>
+                <mrow>
+                    <xsl:apply-templates/>
+                </mrow>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- Non-empty text nodes -->

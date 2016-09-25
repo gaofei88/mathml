@@ -27,15 +27,22 @@ matelem/last/r   = "<(ns)mtd columnalign='right'>$+$n#$-$n</(ns)mtd>";
 
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    exclude-result-prefixes="xs"
-    version="1.0">
+                xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xls="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="xs"
+                version="1.0">
 
     <!-- Matrices TODO -->
     <xsl:template match="matrix[h_just='left']">
         <mtable columnalign="left">
-            <xsl:variable name="rows" select="number(rows)"/>
-            <xsl:apply-templates select="(slot | pile)[position() mod $rows = 1]" mode="rows-left" />
+            <xsl:variable name="cols" select="number(cols)"/>
+            <xsl:choose>
+                <xsl:when test="$cols = 1">
+                    <xsl:apply-templates select="(slot | pile)" mode="rows-left"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="(slot | pile)[position() mod $cols = 1]" mode="rows-left" />
+                </xsl:otherwise>
+            </xsl:choose>
         </mtable>
     </xsl:template>
 
@@ -54,10 +61,10 @@ matelem/last/r   = "<(ns)mtd columnalign='right'>$+$n#$-$n</(ns)mtd>";
     </xsl:template>
 
     <xsl:template match="slot | pile" mode="rows-left">
-        <xsl:variable name="rows" select="number(parent::*/rows)"/>
+        <xsl:variable name="cols" select="number(parent::*/cols)"/>
         <mtr columnalign="left">
             <xsl:apply-templates select="." mode="columns-left" />
-            <xsl:apply-templates select="(following-sibling::slot | following-sibling::pile)[position() &lt; $rows]" mode="columns-left" />
+            <xsl:apply-templates select="(following-sibling::slot | following-sibling::pile)[position() &lt; $cols]" mode="columns-left" />
         </mtr>
     </xsl:template>
 

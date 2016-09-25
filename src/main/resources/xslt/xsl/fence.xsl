@@ -6,11 +6,20 @@
 
     <!-- Fences -->
     <xsl:template match="tmpl[selector='tmPAREN']">
-        <mrow>
-            <mo>(</mo>
-                <xsl:apply-templates select="slot[1] | pile[1]"/>
-            <mo>)</mo>
-        </mrow>
+        <xsl:choose>
+            <xsl:when test="count(slot//matrix) &gt; 0">
+                <mfenced>
+                    <xsl:apply-templates select="slot[1] | pile[1]"/>
+                </mfenced>
+            </xsl:when>
+            <xsl:otherwise>
+                <mrow>
+                    <mo>(</mo>
+                    <xsl:apply-templates select="slot[1] | pile[1]"/>
+                    <mo>)</mo>
+                </mrow>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="tmpl[selector='tmPAREN' and variation='tvFENCE_L' and not(variation='tvFENCE_R')]">
@@ -110,7 +119,16 @@
     </xsl:template>
 
     <xsl:template match="tmpl[selector='tmBRACE' and variation='tvFENCE_L' and not(variation='tvFENCE_R')]">
-        <mrow><mo>{</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> </mrow>
+        <xsl:choose>
+            <xsl:when test="count(slot//matrix) &gt; 0">
+                <mfenced open="{" close="">
+                    <xsl:apply-templates select="slot[1] | pile[1]"/>
+                </mfenced>
+            </xsl:when>
+            <xsl:otherwise>
+                <mrow><mo>{</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> </mrow>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="tmpl[selector='tmBRACE' and variation='tvFENCE_R' and not(variation='tvFENCE_L')]">

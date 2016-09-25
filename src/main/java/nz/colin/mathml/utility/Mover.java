@@ -222,7 +222,7 @@ public class Mover {
             if(canBreak){
                 break;
             }else{
-                ((Element) parent).appendChild(elements.get(i));
+                ((Element) parent).appendChild(elements.get(i).copy());
                 elements.get(i).detach();
             }
         }
