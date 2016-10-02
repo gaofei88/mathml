@@ -1849,6 +1849,10 @@
     </xsl:template>
 
 
+    <!-- special greek character -->
+    <xsl:template match="char[mt_code_value='0x03D5' and variation='mathmode']">
+        <mo>&amp;phi;</mo>
+    </xsl:template>
 
 
 </xsl:stylesheet>

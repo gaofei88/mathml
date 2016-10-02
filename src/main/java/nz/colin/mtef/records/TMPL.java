@@ -370,13 +370,63 @@ public class TMPL extends Record{
         public static final int AR_LOS = 0x10;
         public static final int AR_SOL = 0x20;
 
+        private static final Map<Integer, String> variationMaps;
+
+        static{
+            Map<Integer, String> _variationMaps = Maps.newHashMap();
+            _variationMaps.put(0x00, "tvAR_SINGLE");
+            _variationMaps.put(0x01, "tvAR_DOUBLE");
+            //_variationMaps.put(0x10, )
+            //_variationMaps.put()
+            variationMaps = ImmutableMap.copyOf(_variationMaps);
+        }
         public Arrow(int type) {
             super(type);
         }
 
         @Override
         public String getVariation(int variation) {
-            return null;
+            String vName = null;
+            if(variation == 0x00){
+                vName = "tvAR_SINGLE";
+            }
+            if(variation == 0x01){
+                vName = "tvAR_DOUBLE";
+            }
+            if((variation & 0x10) > 0){
+                if((variation & 0x01) > 0 || (variation & 0x02) > 0){
+                    vName = "tvAR_LOS";
+                }else{
+                    vName = "tvAR_LEFT";
+                }
+            }
+            if((variation & 0x20) > 0){
+                if((variation & 0x01) > 0 || (variation & 0x02) > 0){
+                    vName = "tvAR_SOL";
+                }else{
+                    vName = "tvAR_RIGHT";
+                }
+            }
+            if(variation == 0x02){
+                vName = "tvAR_HARPOON";
+            }
+            if((variation & 0x04) > 0){
+                if((variation & 0x08) > 0){
+                    vName = "tvAR_TOPBOTTOM";
+                }else if(variation == 0x04){
+                    vName = "tvAR_TOP";
+                }
+            }
+            if((variation & 0x08) > 0){
+                if((variation & 0x04) > 0){
+                    vName = "tvAR_TOPBOTTOM";
+                }else if(variation == 0x08){
+                    vName = "tvAR_BOTTOM";
+                }
+            }
+
+            return vName;
+           // return null;
             //return variationMaps.get(variation);
         }
 
