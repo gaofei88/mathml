@@ -360,26 +360,7 @@ public class TMPL extends Record{
     }
 
     public static class Arrow extends Template {
-        public static final int AR_SINGLE = 0x00;
-        public static final int AR_DOUBLE = 0x01;
-        public static final int AR_HARPOON = 0x02;
-        public static final int AR_TOP = 0x04;
-        public static final int AR_BOTTOM = 0x08;
-        public static final int AR_LEFT = 0x10;
-        public static final int AR_RIGHT = 0x20;
-        public static final int AR_LOS = 0x10;
-        public static final int AR_SOL = 0x20;
 
-        private static final Map<Integer, String> variationMaps;
-
-        static{
-            Map<Integer, String> _variationMaps = Maps.newHashMap();
-            _variationMaps.put(0x00, "tvAR_SINGLE");
-            _variationMaps.put(0x01, "tvAR_DOUBLE");
-            //_variationMaps.put(0x10, )
-            //_variationMaps.put()
-            variationMaps = ImmutableMap.copyOf(_variationMaps);
-        }
         public Arrow(int type) {
             super(type);
         }
@@ -426,8 +407,7 @@ public class TMPL extends Record{
             }
 
             return vName;
-           // return null;
-            //return variationMaps.get(variation);
+
         }
 
         @Override

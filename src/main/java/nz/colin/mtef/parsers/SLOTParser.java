@@ -2,9 +2,7 @@ package nz.colin.mtef.parsers;
 
 import com.google.common.collect.Lists;
 import nz.colin.mtef.exceptions.ParseException;
-import nz.colin.mtef.records.RULER;
-import nz.colin.mtef.records.Record;
-import nz.colin.mtef.records.SLOT;
+import nz.colin.mtef.records.*;
 
 import java.io.PushbackInputStream;
 import java.util.List;

@@ -33,7 +33,18 @@ public class XMLSerialize implements RecordVisitor{
         if(el.getChildElements().size() == 0){
             System.out.println(el.toXML().toString());
         }
+
+        current.push(el);
+
+        for(Record record : aChar.getEmbellishments()){
+            record.accept(this);
+        }
+
+        current.pop();
         current.peek().appendChild(el);
+
+
+ //       current.peek().appendChild(el);
     }
 
     public void visit(COLOR aColor) {
@@ -51,7 +62,11 @@ public class XMLSerialize implements RecordVisitor{
 
     public void visit(EMBELL anEmbell) {
         Element el = new Element("embell");
-        el.appendChild("have not implement yet.");
+
+        Element e = new Element("embell");
+        e.appendChild(anEmbell.getEmbell());
+        el.appendChild(e);
+
         current.peek().appendChild(el);
     }
 
