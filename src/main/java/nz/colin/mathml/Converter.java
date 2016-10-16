@@ -1,17 +1,14 @@
 package nz.colin.mathml;
 
 import nu.xom.*;
-import nu.xom.xslt.XSLException;
-import nu.xom.xslt.XSLTransform;
 import nz.colin.mathml.utility.CharReplacer;
 import nz.colin.mathml.utility.Mover;
-import nz.colin.mtef.records.CHAR;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
+
+import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
 
 /**
  * Created by colin on 28/08/16.
@@ -25,21 +22,37 @@ public class Converter {
         replacer.replace(root);
 
         try {
-            File stylesheet = new File(Converter.class.getResource("../../").getPath(), "../xslt/transform.xsl");
             Builder builder = new Builder();
-            Document stylesheetDoc = builder.build(stylesheet);
-            Document input = builder.build(new ByteArrayInputStream(root.toXML().getBytes()));
-            XSLTransform xform = new XSLTransform(stylesheetDoc);
-            Nodes result = xform.transform(input);
-            Document actualResult = XSLTransform.toDocument(result);
-            return actualResult;
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            StreamSource xsltSource = new StreamSource(this.getClass().getClassLoader().getResourceAsStream("xslt/transform.xsl"));
+
+            transformerFactory.setURIResolver(new ClasspathResourceURIResolver());
+
+            Templates cachedXSLT = transformerFactory.newTemplates(xsltSource);
+            Transformer transformer = cachedXSLT.newTransformer();
+
+            StringWriter sw = new StringWriter();
+            StreamResult rst = new StreamResult(sw);
+            transformer.transform(new StreamSource(new ByteArrayInputStream(root.toXML().getBytes())),rst);
+
+            return builder.build(new ByteArrayInputStream(sw.toString().getBytes()));
+
         } catch (ParsingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (XSLException e) {
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    class ClasspathResourceURIResolver implements URIResolver{
+        public Source resolve(String href, String base) throws TransformerException {
+            return new StreamSource(Converter.class.getClassLoader().getResourceAsStream("xslt/"+href));
+        }
     }
 }
