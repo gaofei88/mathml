@@ -121,7 +121,7 @@
     <xsl:template match="tmpl[selector='tmBRACE' and variation='tvFENCE_L' and not(variation='tvFENCE_R')]">
         <xsl:choose>
             <xsl:when test="count(slot//matrix) &gt; 0">
-                <mfenced open="{" close="">
+                <mfenced open="{{" close="">
                     <xsl:apply-templates select="slot[1] | pile[1]"/>
                 </mfenced>
             </xsl:when>
