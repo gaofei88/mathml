@@ -1794,7 +1794,7 @@
         <mtext><xsl:text disable-output-escaping="yes">&amp;#xFEFF;</xsl:text></mtext>
     </xsl:template>
 
-    <xsl:template match="char[mt_code_value='0x2212' and variation='mathmode']">
+    <xsl:template match="char[mt_code_value='0x2212' and variation='mathmode']" priority="1">
         <mo><xsl:text disable-output-escaping="yes">&amp;#x2212;</xsl:text></mo>
     </xsl:template>
 
