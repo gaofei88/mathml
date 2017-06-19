@@ -282,7 +282,7 @@
      -->
     <!-- Bars -->
 
-    <xsl:template match="embell[embell='embOBAR']">
+    <xsl:template match="embell[embell='emb0BAR']">
         <mover accent="true">
             <xsl:apply-templates select="(char | mn | mo | mtext | mi)[1]"/>
             <mo>&#xAF;</mo>
