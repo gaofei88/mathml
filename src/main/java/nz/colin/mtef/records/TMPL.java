@@ -271,6 +271,15 @@ public class TMPL extends Record{
         public static final int INTV_RIGHT_LB = 0x20;
         public static final int INTV_RIGHT_RB = 0x30;
 
+        private static final Map<Integer, String> variationMaps;
+
+        static{
+            Map<Integer, String> _variationMaps = Maps.newHashMap();
+            _variationMaps.put(0x12, "tvINTV_LBRP");
+            _variationMaps.put(0x30, "tvINTV_LPRB");
+            variationMaps = _variationMaps;
+        }
+
         public Interval(int type) {
             super(type);
         }
@@ -283,8 +292,11 @@ public class TMPL extends Record{
         @Override
         public String getVariation(int variation) {
             //TO-DO: need to further study
-            System.out.println("cannot parse intervals, sorry");
-            return null;
+            String variat =  variationMaps.get(variation);
+            if( variat == null ){
+                System.out.println("cannot parse intervals, sorry " + variation);
+            }
+            return variat;
             //return variationMaps.get(variation);
         }
     }
