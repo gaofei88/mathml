@@ -94,6 +94,18 @@
         <mrow> <mo>[</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>[</mo> </mrow>
     </xsl:template>
 
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_LBLP']">
+        <mrow> <mo>[</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>(</mo> </mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_LBRP']">
+        <mrow><mo>[</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>)</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_LBRB']">
+        <mrow> <mo>[</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>]</mo> </mrow>
+    </xsl:template>
+
     <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_RBRB']">
         <mrow><mo>]</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>]</mo></mrow>
     </xsl:template>
@@ -102,12 +114,44 @@
         <mrow><mo>]</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>[</mo></mrow>
     </xsl:template>
 
-    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_LBRP']">
-        <mrow><mo>[</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>)</mo></mrow>
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_RBLP']">
+        <mrow><mo>]</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>(</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_RBRP']">
+        <mrow><mo>]</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>)</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_LPLP']">
+        <mrow><mo>(</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>(</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_LPRP']">
+        <mrow><mo>(</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>)</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_LPLB']">
+        <mrow><mo>(</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>(</mo></mrow>
     </xsl:template>
 
     <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_LPRB']">
         <mrow><mo>(</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>]</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_RPLP']">
+        <mrow><mo>)</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>(</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_RPRP']">
+        <mrow><mo>)</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>)</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_RPLB']">
+        <mrow><mo>)</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>[</mo></mrow>
+    </xsl:template>
+
+    <xsl:template match="tmpl[selector='tmINTERVAL' and variation='tvINTV_RPRB']">
+        <mrow><mo>)</mo> <xsl:apply-templates select="slot[1] | pile[1]"/> <mo>]</mo></mrow>
     </xsl:template>
 
     <xsl:template match="tmpl[selector='tmBRACK' and variation='tvFENCE_L' and not(variation='tvFENCE_R')]">

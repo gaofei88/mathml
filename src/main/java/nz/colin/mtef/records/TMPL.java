@@ -275,8 +275,22 @@ public class TMPL extends Record{
 
         static{
             Map<Integer, String> _variationMaps = Maps.newHashMap();
-            _variationMaps.put(0x12, "tvINTV_LBRP");
-            _variationMaps.put(0x30, "tvINTV_LPRB");
+            _variationMaps.put(INTV_LEFT_LP + INTV_RIGHT_LP, "tvINTV_LPLP");
+            _variationMaps.put(INTV_LEFT_LP + INTV_RIGHT_RP, "tvINTV_LPRP");
+            _variationMaps.put(INTV_LEFT_LP + INTV_RIGHT_LB, "tvINTV_LPLB");
+            _variationMaps.put(INTV_LEFT_LP + INTV_RIGHT_RB, "tvINTV_LPRB");
+            _variationMaps.put(INTV_LEFT_RP + INTV_RIGHT_LP, "tvINTV_RPLP");
+            _variationMaps.put(INTV_LEFT_RP + INTV_RIGHT_RP, "tvINTV_RPRP");
+            _variationMaps.put(INTV_LEFT_RP + INTV_RIGHT_LB, "tvINTV_RPLB");
+            _variationMaps.put(INTV_LEFT_RP + INTV_RIGHT_RB, "tvINTV_RPRB");
+            _variationMaps.put(INTV_LEFT_LB + INTV_RIGHT_LP, "tvINTV_LBLP");
+            _variationMaps.put(INTV_LEFT_LB + INTV_RIGHT_RP, "tvINTV_LBRP");
+            _variationMaps.put(INTV_LEFT_LB + INTV_RIGHT_LB, "tvINTV_LBLB");
+            _variationMaps.put(INTV_LEFT_LB + INTV_RIGHT_RB, "tvINTV_LBRB");
+            _variationMaps.put(INTV_LEFT_RB + INTV_RIGHT_LP, "tvINTV_RBLP");
+            _variationMaps.put(INTV_LEFT_RB + INTV_RIGHT_RP, "tvINTV_RBRP");
+            _variationMaps.put(INTV_LEFT_RB + INTV_RIGHT_LB, "tvINTV_RBLB");
+            _variationMaps.put(INTV_LEFT_RB + INTV_RIGHT_RB, "tvINTV_RBRB");
             variationMaps = _variationMaps;
         }
 
