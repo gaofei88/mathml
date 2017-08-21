@@ -1,4 +1,3 @@
-import com.sun.tools.doclets.internal.toolkit.util.DocFinder;
 import nu.xom.Document;
 import nz.colin.mathml.Converter;
 import nz.colin.mtef.XMLSerialize;
@@ -6,7 +5,6 @@ import nz.colin.mtef.exceptions.ParseException;
 import nz.colin.mtef.parsers.MTEFParser;
 import nz.colin.mtef.records.MTEF;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.util.IOUtils;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -61,7 +59,7 @@ public class GeneralTest {
     @Test
     public void testEquation2() throws IOException, ParseException {
        // for(int i = 18; i < 20; i++) {
-            InputStream is = GeneralTest.class.getResourceAsStream("/ole/equation2.bin");
+            InputStream is = GeneralTest.class.getResourceAsStream("/ole/aa.bin");
             //InputStream is = GeneralTest.class.getResourceAsStream("/ole/cly/mttest"+i+".bin");
             POIFSFileSystem poifs = new POIFSFileSystem(is);
             PushbackInputStream pis = new PushbackInputStream(poifs.createDocumentInputStream("Equation Native"));
@@ -75,7 +73,7 @@ public class GeneralTest {
 
            // System.out.println("MTEF is \n" + serializer.getRoot().toXML());
             System.out.println(serializer.getRoot().toXML().toString());
-            Converter c = new Converter();
+            Converter c = Converter.getInstance();
             Document mathml = c.doConvert(serializer.getRoot());
 
             System.out.println("MathML is \n" + mathml.toXML().replace("&amp;", "&"));
