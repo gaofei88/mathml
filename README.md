@@ -8,7 +8,7 @@ However, some modifications have been done to daniel's code and thus I changed t
 (If this is a copyright issue, please contact me and I'll correct it)
 
 ## Build Jar
-maven clean package
+`maven clean package`
 
 ## TO-DO
 * There are still some conversions not done yet and it remains as it is now.
