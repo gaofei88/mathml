@@ -19,6 +19,9 @@
             <xsl:for-each select="slot[1] | pile[1]">
                 <xsl:apply-templates/>
             </xsl:for-each>
+            <xsl:for-each select="slot[2] | pile[2]">
+                <xsl:apply-templates/>
+            </xsl:for-each>
         </mroot>
     </xsl:template>
 </xsl:stylesheet>
