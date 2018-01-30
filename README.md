@@ -7,8 +7,10 @@ This project uses [danielrendall/Metaphor](https://github.com/danielrendall/Meta
 However, some modifications have been done to daniel's code and thus I changed the packagename.
 (If this is a copyright issue, please contact me and I'll correct it)
 
+## Build Jar
+maven clean package
 
-##TO-DO
+## TO-DO
 * There are still some conversions not done yet and it remains as it is now.
 * Test will be added in future.
-* Currently I can only assure some of the conversion works as I don't really complete re-implementation of mathtype_to_mathml's mover.rb
+* More xslt template needs to be added/modified
