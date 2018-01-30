@@ -1,5 +1,5 @@
 # mathml
-##Project Intro
+## Project Intro
 This project is just a java-implementation for [jure/mathtype_to_mathml](https://github.com/jure/mathtype_to_mathml)
 
 jure/mathtype_to_mathml uses [jure/mathtype](https://github.com/jure/mathtype) to transform an ole bin into a MTEF(v5).
