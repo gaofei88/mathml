@@ -14,26 +14,21 @@ import java.io.*;
  * Created by colin on 28/08/16.
  */
 public class Converter {
-    private static Converter instance;
+
     private static StreamSource xsltSource;
     private static Templates cachedXSLT;
-    public static Converter getInstance(){
-        if(null == instance){
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            instance = new Converter();
-            xsltSource = new StreamSource(Converter.class.getClassLoader().getResourceAsStream("xslt/transform.xsl"));
-            transformerFactory.setURIResolver(new ClasspathResourceURIResolver());
-            try {
-                cachedXSLT = transformerFactory.newTemplates(xsltSource);
-            } catch (TransformerConfigurationException e) {
-                System.out.println("cannot load xsl files");
-                e.printStackTrace();
-            }
 
+    public Converter (){
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        xsltSource = new StreamSource(Converter.class.getClassLoader().getResourceAsStream("xslt/transform.xsl"));
+        transformerFactory.setURIResolver(new ClasspathResourceURIResolver());
+        try {
+            cachedXSLT = transformerFactory.newTemplates(xsltSource);
+        } catch (TransformerConfigurationException e) {
+            System.out.println("cannot load xsl files");
+            e.printStackTrace();
         }
-        return instance;
     }
-
 
     public Document doConvert(Element root){
         Mover mover = new Mover();
