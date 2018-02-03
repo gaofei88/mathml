@@ -7,8 +7,8 @@ This project uses [danielrendall/Metaphor](https://github.com/danielrendall/Meta
 However, some modifications have been done to daniel's code and thus I changed the packagename.
 (If this is a copyright issue, please contact me and I'll correct it)
 
-## Build Jar
-`maven clean package`
+## Build Jar with dependencies
+`maven clean assembly:assembly`
 
 ## TO-DO
 * There are still some conversions not done yet and it remains as it is now.
