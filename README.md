@@ -1,4 +1,4 @@
-# mathml
+# mathml [![Build Status](https://travis-ci.org/gaofei88/mathml.svg?branch=master)](http://travis-ci.org/gaofei88/mathml)
 ## Project Intro
 This project is just a java-implementation for [jure/mathtype_to_mathml](https://github.com/jure/mathtype_to_mathml)
 
