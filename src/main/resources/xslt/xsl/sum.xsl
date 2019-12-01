@@ -6,7 +6,7 @@
 
      <!-- Summations -->
 
-    <xsl:template match="tmpl[selector='tmSUM' and (not(variation='tvBO_UPPER') and not(variation='tvBO_UPPER'))]">
+    <xsl:template match="tmpl[selector='tmSUM' and variation != '' and (not(variation='tvBO_UPPER') and not(variation='tvBO_UPPER'))]">
         <mstyle displaystyle="true">
             <mo>&#x2211;</mo>
             <xsl:apply-templates select="slot[1] | pile[1]"/>
@@ -44,7 +44,7 @@
         </mstyle>
     </xsl:template>
 
-    <xsl:template match="tmpl[selector='tmSUM' and not(variation='tvBO_SUM')]">
+    <xsl:template match="tmpl[selector='tmSUM' and variation != '' and not(variation='tvBO_SUM')]">
         <mstyle displaystyle="true">
             <msubsup>
                 <mo>&#x2211;</mo>
