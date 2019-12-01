@@ -43,7 +43,10 @@ public class Converter {
             StreamResult rst = new StreamResult(sw);
             cachedXSLT.newTransformer().transform(new StreamSource(new ByteArrayInputStream(root.toXML().getBytes())),rst);
 
-            return builder.build(new ByteArrayInputStream(sw.toString().getBytes("UTF-8")));
+            Document result =  builder.build(new ByteArrayInputStream(sw.toString().getBytes("UTF-8")));
+            this.prettify(result.getRootElement());
+
+            return result;
 
         } catch (ParsingException e) {
             e.printStackTrace();
@@ -58,6 +61,46 @@ public class Converter {
     static class ClasspathResourceURIResolver implements URIResolver{
         public Source resolve(String href, String base) throws TransformerException {
             return new StreamSource(Converter.class.getClassLoader().getResourceAsStream("xslt/"+href));
+        }
+    }
+
+    private void prettify(Element element) {
+        Elements childElements = element.getChildElements();
+        if (childElements.size() == 1 && element.getLocalName().equals("mrow")) {
+            Element parent = (Element) element.getParent();
+            element.detach();
+
+            for(int i = 0; i < childElements.size(); i++) {
+                Element child = childElements.get(i);
+                child.detach();
+                parent.appendChild(child);
+            }
+            prettify(parent);
+        } else {
+            if (element.getLocalName().equals("mrow")) {
+                mergeMN(element);
+            }
+            for(int i = 0; i < childElements.size(); i++) {
+                prettify(childElements.get(i));
+            }
+        }
+    }
+
+    private void mergeMN(Element element) {
+        int size = element.getChildCount();
+        int i = 0;
+        while(i < size - 1) {
+           Element child = (Element) element.getChild(i);
+           Element nextChild = (Element) element.getChild(i+1);
+           if (child.getLocalName().equals("mn") && nextChild.getLocalName().equals("mn")) {
+               String newValue = child.getValue() + nextChild.getValue();
+               child.getChild(0).detach();
+               child.appendChild(newValue);
+               nextChild.detach();
+               size--;
+           } else {
+               i++;
+           }
         }
     }
 }

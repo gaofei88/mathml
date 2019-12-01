@@ -17,10 +17,14 @@
     <xsl:template match="tmpl[selector='tmROOT' and variation='tvROOT_NTH']">
         <mroot>
             <xsl:for-each select="slot[1] | pile[1]">
-                <xsl:apply-templates/>
+                <mrow>
+                    <xsl:apply-templates/>
+                </mrow>
             </xsl:for-each>
             <xsl:for-each select="slot[2] | pile[2]">
-                <xsl:apply-templates/>
+                <mrow>
+                    <xsl:apply-templates/>
+                </mrow>
             </xsl:for-each>
         </mroot>
     </xsl:template>

@@ -8,8 +8,12 @@
 
      <xsl:template match="tmpl[selector='tmFRACT']">
         <mfrac>
-            <xsl:apply-templates select="slot[1] | pile[1]"/>
-            <xsl:apply-templates select="slot[2] | pile[2]"/>
+            <mrow>
+                <xsl:apply-templates select="slot[1] | pile[1]"/>
+            </mrow>
+            <mrow>
+                <xsl:apply-templates select="slot[2] | pile[2]"/>
+            </mrow>
         </mfrac>
     </xsl:template>
 

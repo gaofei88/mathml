@@ -55,7 +55,7 @@ public class TMPL extends Record{
     public static final int VEC = 31;
     public static final int TILDE = 32;
     public static final int HAT = 33;
-    public static final int ARC = 24;
+    public static final int ARC = 34;
     public static final int JSTATUS = 35;
     public static final int STRIKE = 36;
     public static final int BOX = 37;

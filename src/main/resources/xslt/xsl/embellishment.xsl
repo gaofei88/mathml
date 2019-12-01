@@ -18,7 +18,7 @@
     -->
     <!-- Dots -->
 
-    <xsl:template match="embell[embell='emb1DOT']">
+    <xsl:template match="embell[embell='emb1DOT' or embell='embDOT']">
         <mover accent="true">
             <xsl:apply-templates select="(char | mn | mo | mtext | mi)[1]"/>
             <mo>&#x2D9;</mo>

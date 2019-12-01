@@ -16,7 +16,7 @@ public class CHARParser extends Parser<CHAR> {
     protected CHAR doParse(PushbackInputStream in) throws ParseException {
         int options = readByte(in);
         Record.Nudge nudge = (options & Record.Options.NUDGE) > 0 ? readNudge(in) : new Record.Nudge(0,0);
-        int typeFace = readUnsignedInt(in);
+        int typeFace = readUnsignedInt(in) - 128;
 
         Integer mtCodeValue = (options & Record.Options.CHAR_ENC_NO_MTCODE) > 0 ? null : readSimple16BitInteger(in);
         Integer fontPosition = null;
