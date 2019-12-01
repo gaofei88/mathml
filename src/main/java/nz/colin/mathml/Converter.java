@@ -78,7 +78,8 @@ public class Converter {
             prettify(parent);
         } else {
             if (element.getLocalName().equals("mrow")) {
-                mergeMN(element);
+                merge(element, "mn");
+                merge(element, "mtext");
             }
             for(int i = 0; i < childElements.size(); i++) {
                 prettify(childElements.get(i));
@@ -86,13 +87,13 @@ public class Converter {
         }
     }
 
-    private void mergeMN(Element element) {
+    private void merge(Element element, String node) {
         int size = element.getChildCount();
         int i = 0;
         while(i < size - 1) {
            Element child = (Element) element.getChild(i);
            Element nextChild = (Element) element.getChild(i+1);
-           if (child.getLocalName().equals("mn") && nextChild.getLocalName().equals("mn")) {
+           if (child.getLocalName().equals(node) && nextChild.getLocalName().equals(node)) {
                String newValue = child.getValue() + nextChild.getValue();
                child.getChild(0).detach();
                child.appendChild(newValue);

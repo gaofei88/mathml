@@ -47,7 +47,7 @@ public class Replacement {
     private static final TextMap[] textMaps = new TextMap[]{
             new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
             new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
-            new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
+            new TextMap("<mo>(Char)</mo>", "<mi>(Char)</mi>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
             new TextMap("<mo>(Char)</mo>"), new TextMap("<mo>(Char)</mo>"),
             new TextMap(UNSUPPORTED, UNSUPPORTED), new TextMap(UNSUPPORTED, UNSUPPORTED), new TextMap("<mn>(Char)</mn>", "<mi>(Char)</mi>", "(Char)"),
             new TextMap("<mo>(Char)</mo>", "<mi>(Char)</mi>"), new TextMap("<mi>(Char)</mi>", "<mi>(Char)</mi>"), new TextMap("<mi>(Char)</mi>", "<mi>(Char)</mi>"),

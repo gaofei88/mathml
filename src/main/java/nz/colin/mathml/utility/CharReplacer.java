@@ -1,9 +1,6 @@
 package nz.colin.mathml.utility;
 
-import nu.xom.Element;
-import nu.xom.Elements;
-import nu.xom.Node;
-import nu.xom.Nodes;
+import nu.xom.*;
 import nz.colin.mathml.domain.Replacement;
 import nz.colin.mathml.domain.TextMap;
 
@@ -61,6 +58,9 @@ public class CharReplacer {
         }
 
         Element m = new Element(replacedStr.substring(1,3));
+        if (mode.equals("textmode")) {
+            m = new Element("mtext");
+        }
         m.appendChild(replacedStr.substring(4, replacedStr.length() - 5));
 
         Element parent = (Element) node.getParent();
