@@ -68,13 +68,13 @@ public class Converter {
         Elements childElements = element.getChildElements();
         if (childElements.size() == 1 && element.getLocalName().equals("mrow")) {
             Element parent = (Element) element.getParent();
+            int index = parent.indexOf(element);
             element.detach();
 
-            for(int i = 0; i < childElements.size(); i++) {
-                Element child = childElements.get(i);
-                child.detach();
-                parent.appendChild(child);
-            }
+            Element child = childElements.get(0);
+            child.detach();
+            parent.insertChild(child, index);
+            
             prettify(parent);
         } else {
             if (element.getLocalName().equals("mrow")) {
