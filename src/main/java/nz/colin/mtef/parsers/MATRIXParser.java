@@ -2,6 +2,7 @@ package nz.colin.mtef.parsers;
 
 import com.google.common.collect.Lists;
 import nz.colin.mtef.exceptions.ParseException;
+import nz.colin.mtef.records.FULL;
 import nz.colin.mtef.records.MATRIX;
 import nz.colin.mtef.records.Record;
 
@@ -39,12 +40,18 @@ public class MATRIXParser extends Parser<MATRIX> {
             readRecordsToEnd(in, records); // 这是一个hack, 之间应该有一行或者几行是不用的数据
         }while(records.size() == 0);
 
-        if (records.size() != rows * cols) {
+        List<Record> refinedRecords = Lists.newArrayList();
+        for(Record record : records) {
+            if (!(record instanceof FULL)) {
+                refinedRecords.add(record);
+            }
+        }
+        if (refinedRecords.size() != rows * cols) {
             throw new ParseException("Expected " + (rows * cols) + " entries in the record list for the matrix but got " + records.size());
         }
         List<List<Record>> rowList = Lists.newArrayListWithCapacity(rows);
         for (int i=0; i<rows; i++) {
-            rowList.add(records.subList(i * cols, (i+1) * cols));
+            rowList.add(refinedRecords.subList(i * cols, (i+1) * cols));
         }
         return new MATRIX(options, nudge,vAlign,hJust,vJust,rows, cols, rowPartition, columnPartition, rowList);
     }

@@ -25,9 +25,11 @@
     </xsl:template>
 
     <xsl:template match="char[variation = 'textmode']">
-        <xsl:call-template name="charhex">
-            <xsl:with-param name="mt_code_value" select="mt_code_value/text()" />
-        </xsl:call-template>
+        <mi>
+            <xsl:call-template name="charhex">
+                <xsl:with-param name="mt_code_value" select="mt_code_value/text()" />
+            </xsl:call-template>
+        </mi>
     </xsl:template>
 
     <xsl:template match="char[typeface = '2']">

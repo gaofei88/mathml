@@ -17,9 +17,16 @@
         </msubsup>
     </xsl:template>
 
+    <xsl:template match="tmpl[selector='tmINTOP' and not(sup)]">
+        <msub>
+            <xsl:apply-templates select="slot[4] | pile[4]"/>
+            <xsl:apply-templates select="slot[2] | pile[2]"/>
+        </msub>
+    </xsl:template>
+
     <xsl:template match="tmpl[selector='tmINTOP' and variation='tvBO_UPPER']">
         <msup>
-            <mstyle mathsize="140%" displaystyle="true"><xsl:apply-templates select="slot[4] | pile[4] | pile[4]"/></mstyle>
+            <xsl:apply-templates select="slot[4] | pile[4] | pile[4]"/>
             <xsl:apply-templates select="slot[3] | pile[3]"/>
         </msup>
     </xsl:template>

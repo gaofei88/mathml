@@ -54,7 +54,7 @@
     <xsl:template match="tmpl[selector='tmUBAR']">
         <munder accentunder="true">
             <xsl:apply-templates select="(slot | pile)[1]"/>
-            <mo stretchy="true">_</mo>
+            <mo stretchy="true">&#xAF;</mo>
         </munder>
     </xsl:template>
 
@@ -62,9 +62,9 @@
         <munder accentunder="true">
             <munder accentunder="true">
                 <xsl:apply-templates select="(slot | pile)[1]"/>
-                <mo stretchy="true">_</mo>
+                <mo stretchy="true">&#xAF;</mo>
             </munder>
-            <mo stretchy="true">_</mo>
+            <mo stretchy="true">&#xAF;</mo>
         </munder>
     </xsl:template>
 
