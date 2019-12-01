@@ -32,6 +32,20 @@ matelem/last/r   = "<(ns)mtd columnalign='right'>$+$n#$-$n</(ns)mtd>";
                 version="1.0">
 
     <!-- Matrices TODO -->
+    <xsl:template match="matrix[h_just != 'left' and h_just != 'right' and h_just != 'center']">
+        <mtable columnalign="left">
+            <xsl:variable name="cols" select="number(cols)"/>
+            <xsl:choose>
+                <xsl:when test="$cols = 1">
+                    <xsl:apply-templates select="(slot | pile)" mode="rows-left"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="(slot | pile)[position() mod $cols = 1]" mode="rows-left" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </mtable>
+    </xsl:template>
+
     <xsl:template match="matrix[h_just='left']">
         <mtable columnalign="left">
             <xsl:variable name="cols" select="number(cols)"/>

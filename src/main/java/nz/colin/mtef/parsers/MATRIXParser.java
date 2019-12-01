@@ -5,6 +5,7 @@ import nz.colin.mtef.exceptions.ParseException;
 import nz.colin.mtef.records.FULL;
 import nz.colin.mtef.records.MATRIX;
 import nz.colin.mtef.records.Record;
+import nz.colin.mtef.records.SLOT;
 
 import java.io.PushbackInputStream;
 import java.util.List;
@@ -42,7 +43,7 @@ public class MATRIXParser extends Parser<MATRIX> {
 
         List<Record> refinedRecords = Lists.newArrayList();
         for(Record record : records) {
-            if (!(record instanceof FULL)) {
+            if (record instanceof SLOT) {
                 refinedRecords.add(record);
             }
         }
