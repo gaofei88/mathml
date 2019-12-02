@@ -2,6 +2,7 @@ package nz.colin.mathml.utility;
 
 import nu.xom.*;
 import nz.colin.mathml.domain.Replacement;
+import nz.colin.mathml.domain.Style;
 import nz.colin.mathml.domain.TextMap;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,8 +14,11 @@ import java.lang.reflect.Method;
 public class CharReplacer {
     private final Replacement replacement;
 
-    public CharReplacer() {
+    private Style style;
+
+    public CharReplacer(Style style) {
         this.replacement = new Replacement();
+        this.style = style;
     }
 
     public void replace(Element root){
@@ -60,6 +64,27 @@ public class CharReplacer {
         Element m = new Element(replacedStr.substring(1,3));
         if (mode.equals("textmode")) {
             m = new Element("mtext");
+            Style.FontStyle fontStyle = style.getFontStyle("text");
+            String styleStr = getFontStyleStr(fontStyle);
+            if (styleStr != null) {
+                m.addAttribute(new Attribute("mathvariant", styleStr));
+            }
+        } else if (mode.equals("mathmode")) {
+            Style.FontStyle fontStyle = style.getFontStyle("variable");
+            String styleStr = getFontStyleStr(fontStyle);
+            if (styleStr != null) {
+                switch (m.getLocalName()) {
+                    case "mn":
+                    case "mi":
+                        m.addAttribute(new Attribute("mathvariant", styleStr));
+                        break;
+                    case "mo":
+                        if (styleStr.contains("bold")) {
+                            m.addAttribute(new Attribute("mathvariant", "bold"));
+                        }
+                        break;
+                }
+            }
         }
         m.appendChild(replacedStr.substring(4, replacedStr.length() - 5));
 
@@ -72,5 +97,19 @@ public class CharReplacer {
                 break;
             }
         }
+    }
+
+    private String getFontStyleStr(Style.FontStyle fontStyle) {
+        String styleStr = null;
+        if (fontStyle.isBold()) {
+            if (fontStyle.isItalic()) {
+                styleStr = "bold-italic";
+            } else {
+                styleStr = "bold";
+            }
+        } else if (fontStyle.isItalic()) {
+            styleStr = "italic";
+        }
+        return styleStr;
     }
 }

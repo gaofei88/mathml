@@ -12,7 +12,7 @@ public class FUTUREParser extends Parser<FUTURE>{
 
     protected FUTURE doParse(PushbackInputStream in) throws ParseException {
         int skip = readByte(in);
-        System.out.println(skip);
+        System.out.println("Future TAG" + skip);
         return new FUTURE(skip);
     }
 

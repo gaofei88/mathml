@@ -1,8 +1,10 @@
 package nz.colin.mathml;
 
 import nu.xom.*;
+import nz.colin.mathml.domain.Style;
 import nz.colin.mathml.utility.CharReplacer;
 import nz.colin.mathml.utility.Mover;
+import nz.colin.mathml.utility.StyleExtractor;
 
 
 import javax.xml.transform.*;
@@ -34,7 +36,10 @@ public class Converter {
         Mover mover = new Mover();
         mover.move(root);
 
-        CharReplacer replacer = new CharReplacer();
+        StyleExtractor extractor = new StyleExtractor();
+        Style style = extractor.extract(root);
+
+        CharReplacer replacer = new CharReplacer(style);
         replacer.replace(root);
 
         try {
