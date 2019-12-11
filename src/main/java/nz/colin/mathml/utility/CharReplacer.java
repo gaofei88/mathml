@@ -70,20 +70,30 @@ public class CharReplacer {
                 m.addAttribute(new Attribute("mathvariant", styleStr));
             }
         } else if (mode.equals("mathmode")) {
-            Style.FontStyle fontStyle = style.getFontStyle("variable");
-            String styleStr = getFontStyleStr(fontStyle);
-            if (styleStr != null) {
-                switch (m.getLocalName()) {
-                    case "mn":
-                    case "mi":
+            Style.FontStyle fontStyle;
+            String styleStr;
+            switch (m.getLocalName()) {
+                case "mn":
+                    fontStyle = style.getFontStyle("number");
+                    styleStr = getFontStyleStr(fontStyle);
+                    if (styleStr != null) {
                         m.addAttribute(new Attribute("mathvariant", styleStr));
-                        break;
-                    case "mo":
-                        if (styleStr.contains("bold")) {
-                            m.addAttribute(new Attribute("mathvariant", "bold"));
-                        }
-                        break;
-                }
+                    }
+                    break;
+                case "mi":
+                    fontStyle = style.getFontStyle("variable");
+                    styleStr = getFontStyleStr(fontStyle);
+                    if (styleStr != null) {
+                        m.addAttribute(new Attribute("mathvariant", styleStr));
+                    }
+                    break;
+                case "mo":
+                    fontStyle = style.getFontStyle("number");
+                    styleStr = getFontStyleStr(fontStyle);
+                    if (styleStr != null && styleStr.contains("bold")) {
+                        m.addAttribute(new Attribute("mathvariant", "bold"));
+                    }
+                    break;
             }
         }
         m.appendChild(replacedStr.substring(4, replacedStr.length() - 5));
