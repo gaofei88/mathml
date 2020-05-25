@@ -33,6 +33,13 @@ public class Style {
         return fontStyles.get(styleNames.indexOf(key));
     }
 
+    public FontStyle getFontStyle(int idx) {
+        if (idx >= fontStyles.size()) {
+            return null;
+        }
+        return fontStyles.get(idx);
+    }
+
     public static class FontStyle {
         private boolean bold;
         private boolean italic;

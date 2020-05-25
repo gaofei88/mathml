@@ -42,7 +42,10 @@ public class CharReplacer {
             }
         }
 
-        String mtCode = node.query("mt_code_value").get(0).getValue().substring(2);
+        Node mtCodeValueNode = node.query("mt_code_value").get(0);
+        int typeface = Integer.parseInt(mtCodeValueNode.getParent().query("typeface").get(0).getValue());
+       // System.out.println("typeface is " + mtCodeValueNode.getParent().query("typeface").get(0).getValue());
+        String mtCode = mtCodeValueNode.getValue().substring(2);
 
         String replacedStr = null;
 
@@ -62,33 +65,45 @@ public class CharReplacer {
         }
 
         Element m = new Element(replacedStr.substring(1,3));
+
+        Style.FontStyle fontStyle = null;
+        if (typeface > 0) {
+            fontStyle = style.getFontStyle(typeface - 1);
+        }
         if (mode.equals("textmode")) {
             m = new Element("mtext");
-            Style.FontStyle fontStyle = style.getFontStyle("text");
+            if (fontStyle == null) {
+                fontStyle = style.getFontStyle("text");
+            }
             String styleStr = getFontStyleStr(fontStyle);
             if (styleStr != null) {
                 m.addAttribute(new Attribute("mathvariant", styleStr));
             }
         } else if (mode.equals("mathmode")) {
-            Style.FontStyle fontStyle;
             String styleStr;
             switch (m.getLocalName()) {
                 case "mn":
-                    fontStyle = style.getFontStyle("number");
+                    if (fontStyle == null) {
+                        fontStyle = style.getFontStyle("number");
+                    }
                     styleStr = getFontStyleStr(fontStyle);
                     if (styleStr != null) {
                         m.addAttribute(new Attribute("mathvariant", styleStr));
                     }
                     break;
                 case "mi":
-                    fontStyle = style.getFontStyle("variable");
+                    if (fontStyle == null) {
+                        fontStyle = style.getFontStyle("variable");
+                    }
                     styleStr = getFontStyleStr(fontStyle);
                     if (styleStr != null) {
                         m.addAttribute(new Attribute("mathvariant", styleStr));
                     }
                     break;
                 case "mo":
-                    fontStyle = style.getFontStyle("number");
+                    if (fontStyle == null) {
+                        fontStyle = style.getFontStyle("number");
+                    }
                     styleStr = getFontStyleStr(fontStyle);
                     if (styleStr != null && styleStr.contains("bold")) {
                         m.addAttribute(new Attribute("mathvariant", "bold"));
