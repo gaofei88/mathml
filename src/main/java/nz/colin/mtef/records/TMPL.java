@@ -520,9 +520,13 @@ public class TMPL extends Record{
         }
         @Override
         public String getVariation(int variation) {
-            // TO-DO: need to deal with BigOpBox variation as well, refer to Integral and Limit
-
-            return null;
+            final int bigOpBoxVariation = variation >> 4;
+            return  bigOpBoxVariations.entrySet().stream().map(entry -> {
+                if ((entry.getKey() & bigOpBoxVariation) > 0) {
+                    return entry.getValue();
+                }
+                return null;
+            }).filter(Objects::nonNull).collect(Collectors.joining(","));
         }
     }
 
