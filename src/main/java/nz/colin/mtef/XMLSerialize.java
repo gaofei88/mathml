@@ -275,11 +275,21 @@ public class XMLSerialize implements RecordVisitor{
 
 
         //System.out.println(aTmpl.getTemplate().getTypeName() + "has options " + aTmpl.getTemplate().hasOptions());
-        Element variation = new Element("variation");
+
         String v = aTmpl.getTemplate().getVariation(aTmpl.getVariation());
         if(v != null) {
-            variation.appendChild(v);
-            el.appendChild(variation);
+            if (v.contains(",")) {
+                String[] vs = v.split(",");
+                for(String each : vs) {
+                    Element variation = new Element("variation");
+                    variation.appendChild(each);
+                    el.appendChild(variation);
+                }
+            } else {
+                Element variation = new Element("variation");
+                variation.appendChild(v);
+                el.appendChild(variation);
+            }
         }
 
         Element templateOptions = new Element("template_specific_options");

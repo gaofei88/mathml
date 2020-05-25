@@ -7,6 +7,8 @@ import nz.colin.mtef.exceptions.ParseException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Created by colin on 27/08/16.
@@ -20,6 +22,12 @@ public class TMPL extends Record{
     private final List<Record> records;
 
     private static final Map<Integer, Template> templates;
+
+    private static final Map<Integer, String> bigOpBoxVariations = ImmutableMap.of(
+            0x01, "tvBO_LOWER",
+            0x02, "tvBO_UPPER",
+            0x04, "tvBO_SUM"
+    );
 
     public static final int ANGLE = 0;
     public static final int PAREN = 1;
@@ -101,6 +109,8 @@ public class TMPL extends Record{
         _templates.put(STRIKE, new Overstrike(STRIKE));
         _templates.put(BOX, new Box(BOX));
         templates = ImmutableMap.copyOf(_templates);
+
+
     }
 
     public TMPL(int options, Nudge nudge, Template template, int variation, int templateOptions, List<Record> records) {
@@ -451,6 +461,20 @@ public class TMPL extends Record{
         public static final int INT_CCW_LOOP = 0x0C;
         public static final int INT_EXPAND = 0x0100;
 
+        private static final Map<Integer, String> variationMaps;
+
+        static{
+            Map<Integer, String> _variationMaps = Maps.newHashMap();
+            _variationMaps.put(INT_1, "tvINT_1");
+            _variationMaps.put(INT_2, "tvINT_2");
+            _variationMaps.put(INT_3, "tvINT_3");
+            _variationMaps.put(INT_LOOP, "tvINT_LOOP");
+            _variationMaps.put(INT_CW_LOOP, "tvINT_CW_LOOP");
+            _variationMaps.put(INT_CCW_LOOP, "tvINT_CCW_LOOP");
+            _variationMaps.put(INT_EXPAND, "tvINT_EXPAND");
+            variationMaps = ImmutableMap.copyOf(_variationMaps);
+        }
+
         public Integral(int type) {
             super(type);
         }
@@ -467,8 +491,21 @@ public class TMPL extends Record{
 
         @Override
         public String getVariation(int variation) {
-            return null;
-            //return variationMaps.get(variation);
+            final int variationForClass = variation % 16;
+            String v = null;
+            if (variationMaps.containsKey(variationForClass)) {
+                v = variationMaps.get(variationForClass);
+            }
+            final int bigOpBoxVariation = variation >> 4;
+            List<String> variations = bigOpBoxVariations.entrySet().stream().map(entry -> {
+                if ((entry.getKey() & bigOpBoxVariation) > 0) {
+                    return entry.getValue();
+                }
+                return null;
+            }).collect(Collectors.toList());
+            variations.add(v);
+
+            return variations.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
         }
     }
 
