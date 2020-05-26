@@ -11,6 +11,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.util.logging.Logger;
 
 /**
  * Created by colin on 28/08/16.
@@ -33,6 +34,7 @@ public class Converter {
     }
 
     public Document doConvert(Element root){
+
         Mover mover = new Mover();
         mover.move(root);
 
@@ -42,22 +44,21 @@ public class Converter {
         CharReplacer replacer = new CharReplacer(style);
         replacer.replace(root);
 
-        try {
+        try (InputStream input = new ByteArrayInputStream(root.toXML().getBytes())){
             Builder builder = new Builder();
             StringWriter sw = new StringWriter();
             StreamResult rst = new StreamResult(sw);
-            cachedXSLT.newTransformer().transform(new StreamSource(new ByteArrayInputStream(root.toXML().getBytes())),rst);
+            cachedXSLT.newTransformer().transform(new StreamSource(input),rst);
 
-            Document result =  builder.build(new ByteArrayInputStream(sw.toString().getBytes("UTF-8")));
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(sw.toString().getBytes("UTF-8"));
+            Document result = builder.build(inputStream);
+            inputStream.close();
+
             this.prettify(result.getRootElement());
 
             return result;
 
-        } catch (ParsingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }   catch (TransformerException e) {
+        } catch (ParsingException | IOException | TransformerException e) {
             e.printStackTrace();
         }
         return null;

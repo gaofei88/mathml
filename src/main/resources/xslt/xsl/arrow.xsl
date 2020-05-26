@@ -21,14 +21,14 @@
 
     <xsl:template match="tmpl[selector='tmARROW' and variation='tvAR_BOTTOM']">
         <munder>
-            <mo>&#x2192;</mo>
+            <mo>&#x27f6;</mo>
             <xsl:apply-templates select="slot[2] | pile[2]"/>
         </munder>
     </xsl:template>
 
     <xsl:template match="tmpl[selector='tmARROW' and variation='tvAR_TOPBOTTOM']">
         <munderover>
-            <mo>&#x2192;</mo>
+            <mo>&#x27f6;</mo>
             <xsl:apply-templates select="slot[2] | pile[2]"/>
             <xsl:apply-templates select="slot[1] | pile[1]"/>
         </munderover>
