@@ -97,16 +97,21 @@ public class Converter {
         int size = element.getChildCount();
         int i = 0;
         while(i < size - 1) {
-           Element child = (Element) element.getChild(i);
-           Element nextChild = (Element) element.getChild(i+1);
-           if (child.getLocalName().equals(node) && nextChild.getLocalName().equals(node)) {
-               String newValue = child.getValue() + nextChild.getValue();
-               child.getChild(0).detach();
-               child.appendChild(newValue);
-               nextChild.detach();
-               size--;
-           } else {
+           Node n = element.getChild(i);
+           if (n instanceof Text) {
                i++;
+           } else {
+               Element child = (Element) n;
+               Element nextChild = (Element) element.getChild(i + 1);
+               if (child.getLocalName().equals(node) && nextChild.getLocalName().equals(node)) {
+                   String newValue = child.getValue() + nextChild.getValue();
+                   child.getChild(0).detach();
+                   child.appendChild(newValue);
+                   nextChild.detach();
+                   size--;
+               } else {
+                   i++;
+               }
            }
         }
     }
