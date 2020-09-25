@@ -28,6 +28,10 @@ public class Mover {
             "selector='tmHBRACK' or " +
             "selector='tmHBRACE'";
 
+    private static final String BAR_SELECTOR = "selector='tmBAR'";
+
+    private static final String BAR_PRE="variation='tvFENCE_L'";
+
     private static final String PRE = "variation='tvSU_PRECEDES'";
 
     private static final List<String> OPEN_PAREN;
@@ -60,8 +64,12 @@ public class Mover {
     private Nodes last_preceding_siblings = null;
 
     public void move(Element root) {
+        movePrecedingFence(root);
+
         moveFollowingSubSup(root);
+        System.out.println("1"+root.toXML());
         movePrecedingSubSup(root);
+        System.out.println("2"+root.toXML());
         invertCharEmbell(root);
     }
 
@@ -86,14 +94,16 @@ public class Mover {
     }
 
     private void movePrecedingSubSup(Element el) {
-        Nodes els = el.query(String.format("//tmpl[(%s) and %s]", SUBSUP_SELECTOR, PRE));
+        Nodes els = el.query(String.format("//tmpl[%s and %s]", SUBSUP_SELECTOR, PRE));
 
         for(int i = 0; i < els.size(); i++){
             Element n = (Element) els.get(i);
             Nodes siblings = newFollowingSiblings(n);
             Element e = new Element("slot");
 
-            if(siblings.size() > 0){
+
+            Element nextNode = (Element) n.getParent().getChild(n.getParent().indexOf(n) + 1);
+            if(siblings.size() > 0 && !nextNode.getLocalName().equals("full")){
                 Node siblingFirst = siblings.get(0);
 
                 boolean hasOpenParen = false;
@@ -129,7 +139,7 @@ public class Mover {
             Elements children = n.getChildElements();
             for(int j = 0; j < children.size(); j++){
                 // System.out.println(children.get(j).getLocalName());
-                if(children.get(j).getLocalName().equals("slot")){
+                if(children.get(j).getLocalName().equals("slot") && e.getChildCount() > 0){
                     n.insertChild(e, j);
                     break;
                 }
@@ -138,55 +148,76 @@ public class Mover {
        // System.out.println(els.size());
     }
 
+    private void movePrecedingFence(Element el) {
+        Nodes els = el.query(String.format("//tmpl[%s and %s]", BAR_SELECTOR, BAR_PRE));
+
+        for(int i = 0; i < els.size(); i++) {
+           Element n = (Element) els.get(i);
+           Nodes siblings = newPrecedingSiblings(n);
+
+            int nPos = n.getParent().indexOf(n);
+            Elements childElements = n.getChildElements();
+            int count = 0;
+            for(int j = 0; j < childElements.size(); j++) {
+                Element c = childElements.get(j);
+                if (c.getLocalName().equals("slot") || c.getLocalName().equals("tmpl") || c.getLocalName().equals("char")) {
+                    count++;
+                    if (c.getLocalName().equals("slot")) {
+                        n.getParent().insertChild(c.getFirstChildElement("tmpl").copy(), nPos);
+                    } else {
+                        n.getParent().insertChild(c.copy(), nPos + count);
+                    }
+                    c.detach();
+                }
+            }
+
+           if (siblings.size() > 0) {
+               Node siblingFirst = siblings.get(siblings.size() - 1);
+               Element slot = new Element("slot");
+               slot.appendChild(siblingFirst.copy());
+               n.appendChild(slot);
+               siblingFirst.detach();
+           }
+
+
+        }
+    }
     private void moveFollowingSubSup(Element el){
         Nodes els = el.query(String.format("//tmpl[(%s) and not(%s)]", SUBSUP_SELECTOR, PRE));
        // System.out.println(els.size());
         for(int i = 0; i < els.size(); i++){
             Element n = (Element) els.get(i);
             Nodes siblings = newPrecedingSiblings(n);
+
             Element e = new Element("slot");
 
-            if(siblings.size() > 0){
+            Element prevNode = (Element) n.getParent().getChild(n.getParent().indexOf(n) - 1);
+
+            if(siblings.size() > 0 && !prevNode.getLocalName().equals("full")){
+
                 Node siblingLast = siblings.get(siblings.size() - 1);
 
                 boolean hasCloseParen = false;
                 Nodes mtCodes = siblingLast.query("//mt_code_value");
-                for(int j = 0; j < mtCodes.size(); j++){
-                    if(CLOSE_PAREN.contains(mtCodes.get(j).getValue())){
+                for (int j = 0; j < mtCodes.size(); j++) {
+                    if (CLOSE_PAREN.contains(mtCodes.get(j).getValue())) {
                         hasCloseParen = true;
                         break;
                     }
                 }
 
-                if(hasCloseParen){
-//                    can't understand what ! in ruby file does.
-//                    System.out.println(siblings.size());
-//                    for(int j = siblings.size()-1; j >= 0; j--){
-//                        Node next = getNext(siblings.get(j));
-//                        boolean hasOpenParen = false;
-//                        Nodes tMtCodes = next.query("//mt_code_value");
-//                        for(int k = 0; k < tMtCodes.size(); k++){
-//                            if(OPEN_PAREN.contains(tMtCodes.get(k).getValue())){
-//                                hasOpenParen = true;
-//                                break;
-//                            }
-//                        }
-//                        if(hasOpenParen){
-//                           siblings.get(j).detach();
-//                        }
-//                    }
+                if (hasCloseParen) {
                     moveParent(siblings, e);
-                    //System.out.println(siblings.size());
-                    //TO-DO: refer mover.rb 73-75
-                }else{
+                } else {
                     e.appendChild(siblingLast.copy());
                     siblingLast.detach();
                 }
+
             }
             Elements children = n.getChildElements();
             for(int j = 0; j < children.size(); j++){
-               // System.out.println(children.get(j).getLocalName());
-                if(children.get(j).getLocalName().equals("slot")){
+                // System.out.println(children.get(j).getLocalName());
+                if(children.get(j).getLocalName().equals("slot") && e.getChildCount() > 0){
                     n.insertChild(e, j);
                     break;
                 }

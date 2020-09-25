@@ -55,7 +55,6 @@ public class Converter {
             inputStream.close();
 
             this.prettify(result.getRootElement());
-
             return result;
 
         } catch (ParsingException | IOException | TransformerException e) {
@@ -86,6 +85,7 @@ public class Converter {
             if (element.getLocalName().equals("mrow")) {
                 merge(element, "mn");
                 merge(element, "mtext");
+                merge(element, "mi");
             }
             for(int i = 0; i < childElements.size(); i++) {
                 prettify(childElements.get(i));
@@ -98,11 +98,13 @@ public class Converter {
         int i = 0;
         while(i < size - 1) {
            Node n = element.getChild(i);
-           if (n instanceof Text) {
+           Node n_1 = element.getChild(i+1);
+
+           if (n instanceof Text || n_1 instanceof Text) {
                i++;
            } else {
                Element child = (Element) n;
-               Element nextChild = (Element) element.getChild(i + 1);
+               Element nextChild = (Element) n_1;
                if (child.getLocalName().equals(node) && nextChild.getLocalName().equals(node)) {
                    String newValue = child.getValue() + nextChild.getValue();
                    child.getChild(0).detach();

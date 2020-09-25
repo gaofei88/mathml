@@ -1,9 +1,5 @@
 package nz.colin.mathml.domain;
 
-import com.google.common.collect.Maps;
-
-import java.util.Map;
-
 /**
  * Created by colin on 28/08/16.
  */

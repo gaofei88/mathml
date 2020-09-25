@@ -69,10 +69,9 @@
     </xsl:template>
 
     <xsl:template match="tmpl[selector='tmBAR' and variation='tvFENCE_L' and not(variation='tvFENCE_R')]">
-        <mrow>
-            <mo>|</mo>
+        <menclose notation="right">
             <xsl:apply-templates select="slot[1] | pile[1]"/>
-        </mrow>
+        </menclose>
     </xsl:template>
 
     <xsl:template match="tmpl[selector='tmBAR' and variation='tvFENCE_R' and not(variation='tvFENCE_L')]">
