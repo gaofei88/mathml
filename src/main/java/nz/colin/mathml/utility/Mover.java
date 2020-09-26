@@ -65,11 +65,8 @@ public class Mover {
 
     public void move(Element root) {
         movePrecedingFence(root);
-
         moveFollowingSubSup(root);
-        System.out.println("1"+root.toXML());
         movePrecedingSubSup(root);
-        System.out.println("2"+root.toXML());
         invertCharEmbell(root);
     }
 
@@ -94,16 +91,14 @@ public class Mover {
     }
 
     private void movePrecedingSubSup(Element el) {
-        Nodes els = el.query(String.format("//tmpl[%s and %s]", SUBSUP_SELECTOR, PRE));
+        Nodes els = el.query(String.format("//tmpl[(%s) and %s]", SUBSUP_SELECTOR, PRE));
 
         for(int i = 0; i < els.size(); i++){
             Element n = (Element) els.get(i);
             Nodes siblings = newFollowingSiblings(n);
             Element e = new Element("slot");
 
-
-            Element nextNode = (Element) n.getParent().getChild(n.getParent().indexOf(n) + 1);
-            if(siblings.size() > 0 && !nextNode.getLocalName().equals("full")){
+            if(siblings.size() > 0){
                 Node siblingFirst = siblings.get(0);
 
                 boolean hasOpenParen = false;
@@ -145,7 +140,6 @@ public class Mover {
                 }
             }
         }
-       // System.out.println(els.size());
     }
 
     private void movePrecedingFence(Element el) {
@@ -163,7 +157,7 @@ public class Mover {
                 if (c.getLocalName().equals("slot") || c.getLocalName().equals("tmpl") || c.getLocalName().equals("char")) {
                     count++;
                     if (c.getLocalName().equals("slot")) {
-                        n.getParent().insertChild(c.getFirstChildElement("tmpl").copy(), nPos);
+                        n.getParent().insertChild(c.getFirstChildElement("tmpl").copy(), nPos+1);
                     } else {
                         n.getParent().insertChild(c.copy(), nPos + count);
                     }
@@ -184,16 +178,14 @@ public class Mover {
     }
     private void moveFollowingSubSup(Element el){
         Nodes els = el.query(String.format("//tmpl[(%s) and not(%s)]", SUBSUP_SELECTOR, PRE));
-       // System.out.println(els.size());
+
         for(int i = 0; i < els.size(); i++){
             Element n = (Element) els.get(i);
             Nodes siblings = newPrecedingSiblings(n);
 
             Element e = new Element("slot");
 
-            Element prevNode = (Element) n.getParent().getChild(n.getParent().indexOf(n) - 1);
-
-            if(siblings.size() > 0 && !prevNode.getLocalName().equals("full")){
+            if(siblings.size() > 0){
 
                 Node siblingLast = siblings.get(siblings.size() - 1);
 
@@ -217,7 +209,7 @@ public class Mover {
             Elements children = n.getChildElements();
             for(int j = 0; j < children.size(); j++){
                 // System.out.println(children.get(j).getLocalName());
-                if(children.get(j).getLocalName().equals("slot") && e.getChildCount() > 0){
+                if(children.get(j).getLocalName().equals("slot")){
                     n.insertChild(e, j);
                     break;
                 }
